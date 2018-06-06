@@ -24,16 +24,11 @@ class App extends Component {
     const {data} = this.state;
     const chartData = Object.values(data.values)
 
-    // console.log(chartData[0])
-    chartData.map(function(value,index){
-      
-    })
     return  (
       <div className="App">
         <LineChart axes dataPoints
         xType={'text'} width={600} height={400}
         data={[chartData]}
-
         />
       </div>
     );
