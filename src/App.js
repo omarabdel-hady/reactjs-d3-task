@@ -1,18 +1,40 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import getApiData from './utils/api';
+import {LineChart} from 'react-easy-chart';
 
 class App extends Component {
-  render() {
-    return (
+
+  constructor(){
+    super()
+    this.state = { data: [] };
+    
+  }
+  getApiData(){
+    getApiData().then((data)=>{
+      this.setState({ data });
+    });
+  }
+  componentDidMount(){
+    this.getApiData();
+  }
+  
+
+  render() {    
+    const {data} = this.state;
+    const chartData = Object.values(data.values)
+
+    // console.log(chartData[0])
+    chartData.map(function(value,index){
+      
+    })
+    return  (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <LineChart axes dataPoints
+        xType={'text'} width={600} height={400}
+        data={[chartData]}
+
+        />
       </div>
     );
   }
