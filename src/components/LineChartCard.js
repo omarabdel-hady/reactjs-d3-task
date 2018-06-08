@@ -46,7 +46,6 @@ class LineChartCard extends Component{
         isLoading:false 
       });
     });
-    // this.isLoading = false;
   }
     render(){
       const {data} = this.state;
