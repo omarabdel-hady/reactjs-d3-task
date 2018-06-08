@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+
 import LineChart from './LineChart'
+import getApiData from '../utils/api';
+
 
 const styles = {
   card: {
@@ -23,41 +26,44 @@ const styles = {
   },
 };
 
-function LineChartCard(props) {
-  const { classes } = props;
-  var dataChart = [
-    {   name: "USA",
-        "values": [
-        {
-        "x": "2017",
-        "y": 5
-        },
-        {
-        "x": "2018",
-        "y": 20
-        },
-        {
-        "x": "2019",
-        "y": 3
-        },
-        {
-        "x": "2020",
-        "y": -1
-        }
-        ]
-        }
-  ];
-  return (
-    <div className="card">
-      <Card className={classes.card}>
-        <CardContent>
-         <LineChart dataChart={dataChart} /> 
-        </CardContent>
-      </Card>
-    </div>
-  );
-}
-
+class LineChartCard extends Component{
+  constructor(){
+    super()
+    this.state = { 
+      data: [],
+      isLoading : true 
+  };
+  }
+  getApiData(){
+    getApiData().then((data)=>{
+      this.setState({ data });
+    });
+  }
+  componentDidMount(){
+    getApiData().then((data)=>{
+      this.setState({ 
+        data, 
+        isLoading:false 
+      });
+    });
+    // this.isLoading = false;
+  }
+    render(){
+      const {data} = this.state;
+      const isLoading = this.state.isLoading;
+      return (
+        <div className="card">
+          <Card>
+            <CardContent>
+            {!isLoading && <LineChart dataChart={[data]} /> }
+            <div className="chart"></div>
+            </CardContent>
+          </Card>
+        </div>
+      );
+    }
+  }
+ 
 LineChartCard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
