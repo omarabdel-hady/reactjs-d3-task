@@ -1,4 +1,3 @@
-import React from 'react'
 import PropTypes from 'prop-types'
 import * as d3 from "d3";
 
@@ -24,7 +23,7 @@ function LineChart({dataChart}) {
     var circleRadiusHover = 9;
     
     /* Format Data */
-    var parseDate = d3.utcParse("%Y-%m-%dT%H:%M:%S%Z");
+    var parseDate = d3.utcParse("%Y-%m-%dT%H:%M:%S%Z"); 
     dataChart.forEach(function(d) { 
       d.values.forEach(function(d) {
         d.x = parseDate(d.x);
